@@ -17,9 +17,13 @@ export function Login(props: any) {
         }
     }, []);
 
-    // const signIn = useCallback(() => {
-    //     //post();
-    // }, [emailControl.value, passwordControl.value]);
+    const signIn = useCallback(async () => {
+        const token = await post("https://bros-back-end.herokuapp.com/auth/signin", {
+            email: emailControl.value,
+            password: passwordControl.value,
+        });
+        console.log(token);
+    }, [emailControl.value, passwordControl.value]);
 
     return (
         <div className="login-component">
@@ -48,7 +52,7 @@ export function Login(props: any) {
                 </CardContent>
                 <CardActions>
                     <Button
-                        //onClick={signIn}
+                        onClick={signIn}
                         disabled={emailControl.error || passwordControl.error}
                         variant="contained"
                         color="primary"
