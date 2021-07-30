@@ -1,10 +1,33 @@
-.login-wrapper {
+.login-component {
     height: 100%;
     display: flex;
 
     .form {
         width: 350px;
-        height: 250px;
         margin: auto;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+
+            .logo-wrapper {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 16px;
+
+                img {
+                    width: 100px;
+                }
+            }
+
+            .input {
+                margin: 10px 0;
+            }
+        }
+
+        .actions {
+            padding: 16px;
+            justify-content: flex-end;
+        }
     }
 }

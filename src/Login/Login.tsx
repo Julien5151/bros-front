@@ -1,15 +1,22 @@
-import { Button, Card, CardActions, CardContent } from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, TextField } from "@material-ui/core";
 import "./Login.scss";
+import logo from "../assets/images/001-beer.svg";
 
 export function Login(props: any) {
     return (
-        <div className="login-wrapper">
+        <div className="login-component">
             <Card className="form">
-                <CardContent>
-                    <p>Test</p>
+                <CardContent className="content">
+                    <div className="logo-wrapper">
+                        <img src={logo} alt="bros and beers logo"></img>
+                    </div>
+                    <TextField className="input" label="Email" variant="outlined" />
+                    <TextField className="input" label="Password" variant="outlined" />
                 </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
+                <CardActions className="actions">
+                    <Button variant="contained" color="primary">
+                        Sign-in
+                    </Button>
                 </CardActions>
             </Card>
         </div>
