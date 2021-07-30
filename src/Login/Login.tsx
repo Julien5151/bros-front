@@ -5,15 +5,15 @@ import logo from "../assets/images/001-beer.svg";
 export function Login(props: any) {
     return (
         <div className="login-component">
-            <Card className="form">
-                <CardContent className="content">
+            <Card>
+                <CardContent>
                     <div className="logo-wrapper">
                         <img src={logo} alt="bros and beers logo"></img>
                     </div>
-                    <TextField className="input" label="Email" variant="outlined" />
-                    <TextField className="input" label="Password" variant="outlined" />
+                    <TextField label="Email" variant="outlined" />
+                    <TextField label="Password" variant="outlined" />
                 </CardContent>
-                <CardActions className="actions">
+                <CardActions>
                     <Button variant="contained" color="primary">
                         Sign-in
                     </Button>
