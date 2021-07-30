@@ -1,6 +1,6 @@
 import { Button, Card, CardActions, CardContent, TextField } from "@material-ui/core";
 import "./Login.scss";
-import logo from "../assets/images/001-beer.svg";
+import logo from "../assets/images/logo.svg";
 
 export function Login(props: any) {
     return (
