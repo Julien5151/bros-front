@@ -3,7 +3,7 @@ import "./Login.scss";
 import logo from "../../assets/images/logo.svg";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
-import { post } from "../../services/api.service";
+import { ApiService } from "../../services/api.service";
 
 export function Login(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
@@ -18,7 +18,7 @@ export function Login(props: any) {
     }, []);
 
     const signIn = useCallback(async () => {
-        const token = await post("https://bros-back-end.herokuapp.com/auth/signin", {
+        const token = await ApiService.post("https://bros-back-end.herokuapp.com/auth/signin", {
             email: emailControl.value,
             password: passwordControl.value,
         });
