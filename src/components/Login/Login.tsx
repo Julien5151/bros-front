@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardContent, TextField } from "@material-ui/core";
 import "./Login.scss";
+import logo from "../../assets/images/logo.svg";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
 import { ApiService } from "../../services/api.service";
@@ -29,7 +30,7 @@ export function Login(props: any) {
             <Card>
                 <CardContent>
                     <div className="logo-wrapper">
-                        <img src={process.env.PUBLIC_URL + "assets/images/logo.svg"} alt="bros and beers logo"></img>
+                        <img src={logo} alt="bros and beers logo"></img>
                     </div>
                     <form autoComplete="off">
                         <TextField
