@@ -4,10 +4,13 @@ import logo from "../../assets/images/logo.svg";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
 import { ApiService } from "../../services/api.service";
+import { useHistory } from "react-router-dom";
+import { PROFILE_ROUTE } from "../../App";
 
 export function Login(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
     const [passwordControl, setPasswordControl] = useState({ error: false, errorText: null, value: null });
+    const history = useHistory();
 
     const handleFieldChange = useCallback((event: BaseSyntheticEvent, updateStateFunction: Function) => {
         if (!event.target.value) {
@@ -18,12 +21,17 @@ export function Login(props: any) {
     }, []);
 
     const signIn = useCallback(async () => {
-        const token = await ApiService.post("https://bros-back-end.herokuapp.com/auth/signin", {
-            email: emailControl.value,
-            password: passwordControl.value,
-        });
-        console.log(token);
-    }, [emailControl.value, passwordControl.value]);
+        try {
+            await ApiService.post("https://bros-back-end.herokuapp.com/auth/signin", {
+                email: emailControl.value,
+                password: passwordControl.value,
+            });
+            // Navigate to profile after successfull login
+            history.push(PROFILE_ROUTE);
+        } catch (error) {
+            console.error(error);
+        }
+    }, [emailControl.value, passwordControl.value, history]);
 
     return (
         <div className="login-component">
