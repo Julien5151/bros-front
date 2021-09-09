@@ -1,7 +1,12 @@
+import { DEVELOPMENT, DEVELOPMENT_BASE_URL, PRODUCTION_BASE_URL } from "../utils/constants";
+
 export class ApiService {
-    static async post(url: string, body: any): Promise<any> {
+    // Set base URL depending on environment
+    static BASE_URL = process.env.NODE_ENV === DEVELOPMENT ? DEVELOPMENT_BASE_URL : PRODUCTION_BASE_URL;
+
+    static async post(endpoint: string, body: any): Promise<any> {
         // Default options are marked with *
-        const response = await fetch(url, {
+        const response = await fetch(this.BASE_URL + endpoint, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             headers: {

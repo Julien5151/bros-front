@@ -22,7 +22,7 @@ export function Login(props: any) {
 
     const signIn = useCallback(async () => {
         try {
-            await ApiService.post("https://bros-back-end.herokuapp.com/auth/signin", {
+            await ApiService.post("/auth/signin", {
                 email: emailControl.value,
                 password: passwordControl.value,
             });
