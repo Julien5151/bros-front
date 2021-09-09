@@ -1,0 +1,26 @@
+.signup-component {
+    height: 100%;
+    display: flex;
+
+    .MuiCard-root {
+        width: 350px;
+        margin: auto;
+
+        .MuiCardContent-root {
+            display: flex;
+            flex-direction: column;
+
+            form {
+                .MuiTextField-root {
+                    margin: 10px 0;
+                    width: 100%;
+                }
+            }
+        }
+
+        .MuiCardActions-root {
+            padding: 16px;
+            justify-content: flex-end;
+        }
+    }
+}
