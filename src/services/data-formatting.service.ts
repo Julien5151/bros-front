@@ -12,7 +12,6 @@ export class DataFormatting {
             binary += String.fromCharCode(bytes[i]);
         }
         // Return encoded string using base64
-        console.log(binary);
         return window.btoa(binary);
     }
 }

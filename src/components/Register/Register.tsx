@@ -34,7 +34,21 @@ export function Register(props: any) {
             const credentials = (await navigator.credentials.create({
                 publicKey: publicKeyCredentialCreationOptions,
             })) as PublicKeyCredential;
-            console.log(DataFormatting.arrayBufferToBase64(credentials.rawId));
+            // Send public credentials to server for validation
+            const signupRequestBody: any = {
+                publicKeyCredential: {
+                    id: credentials.id,
+                    rawId: DataFormatting.arrayBufferToBase64(credentials.rawId),
+                    response: {
+                        attestationObject: DataFormatting.arrayBufferToBase64(
+                            (credentials.response as any).attestationObject
+                        ),
+                        clientDataJSON: DataFormatting.arrayBufferToBase64(credentials.response.clientDataJSON),
+                    },
+                },
+            };
+            const signupResponse = await ApiService.post("/auth/signup", signupRequestBody);
+            console.log(signupResponse);
         } catch (error) {
             console.error(error);
         }
