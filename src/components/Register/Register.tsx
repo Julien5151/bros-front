@@ -3,6 +3,7 @@ import "./Register.scss";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
 import { ApiService } from "../../services/api.service";
+import { DataFormatting } from "../../services/data-formatting.service";
 
 export function Register(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
@@ -30,8 +31,10 @@ export function Register(props: any) {
                     id: Uint8Array.from(credentialCreationOptions.user.id),
                 },
             };
-            const credentials = await navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions });
-            console.log(credentials);
+            const credentials = (await navigator.credentials.create({
+                publicKey: publicKeyCredentialCreationOptions,
+            })) as PublicKeyCredential;
+            console.log(DataFormatting.arrayBufferToBase64(credentials.rawId));
         } catch (error) {
             console.error(error);
         }
