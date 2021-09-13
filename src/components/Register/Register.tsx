@@ -1,10 +1,10 @@
 import { Button, Card, CardActions, CardContent, TextField } from "@material-ui/core";
-import "./Signup.scss";
+import "./Register.scss";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
 import { ApiService } from "../../services/api.service";
 
-export function Signup(props: any) {
+export function Register(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
 
     const handleFieldChange = useCallback((event: BaseSyntheticEvent, updateStateFunction: Function) => {
@@ -31,13 +31,14 @@ export function Signup(props: any) {
                 },
             };
             const credentials = await navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions });
+            console.log(credentials);
         } catch (error) {
             console.error(error);
         }
     }, [emailControl.value]);
 
     return (
-        <div className="signup-component">
+        <div className="register-component">
             <Card>
                 <CardContent>
                     <form autoComplete="off">
