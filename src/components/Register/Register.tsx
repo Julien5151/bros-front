@@ -25,10 +25,10 @@ export function Register(props: any) {
             // Open authenticator for credential creation
             const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
                 ...credentialCreationOptions,
-                challenge: new Uint8Array(credentialCreationOptions.user.challenge),
+                challenge: DataFormatting.stringToUInt8ArrayBuffer(credentialCreationOptions.challenge),
                 user: {
                     ...credentialCreationOptions.user,
-                    id: Uint8Array.from(credentialCreationOptions.user.id),
+                    id: DataFormatting.stringToUInt8ArrayBuffer(credentialCreationOptions.user.id),
                 },
             };
             const credentials = (await navigator.credentials.create({

@@ -14,4 +14,11 @@ export class DataFormatting {
         // Return encoded string using base64
         return window.btoa(binary);
     }
+
+    /**
+     * Converts a string to a Uint8Array
+     */
+    static stringToUInt8ArrayBuffer(string: string): Uint8Array {
+        return Uint8Array.from(string, (c: string) => c.charCodeAt(0));
+    }
 }
