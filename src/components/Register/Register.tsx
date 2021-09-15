@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, TextField } from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, Snackbar, TextField } from "@material-ui/core";
 import "./Register.scss";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
@@ -7,6 +7,14 @@ import { DataFormatting } from "../../services/data-formatting.service";
 
 export function Register(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
+    const [open, setOpen] = useState(false);
+
+    const handleClose = useCallback((event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOpen(false);
+    }, []);
 
     const handleFieldChange = useCallback((event: BaseSyntheticEvent, updateStateFunction: Function) => {
         if (!event.target.value) {
@@ -48,7 +56,8 @@ export function Register(props: any) {
                 },
             };
             const signupResponse = await ApiService.post("/auth/signup", signupRequestBody);
-            console.log(signupResponse);
+            // Open confirmation snackbar
+            setOpen(true);
         } catch (error) {
             console.error(error);
         }
@@ -74,6 +83,16 @@ export function Register(props: any) {
                     </Button>
                 </CardActions>
             </Card>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                }}
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message="Biometric data sent to Kim Jong-Un"
+            />
         </div>
     );
 }
