@@ -1,11 +1,11 @@
-import { Button, Card, CardActions, CardContent, TextField } from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, TextField, Typography, Link } from "@material-ui/core";
 import "./Login.scss";
 import logo from "../../assets/images/logo.svg";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
 import { ApiService } from "../../services/api.service";
 import { useHistory } from "react-router-dom";
-import { PROFILE_ROUTE } from "../../App";
+import { PROFILE_ROUTE, REGISTER_ROUTE } from "../../App";
 
 export function Login(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
@@ -33,6 +33,15 @@ export function Login(props: any) {
         }
     }, [emailControl.value, passwordControl.value, history]);
 
+    const register = useCallback(
+        (event: React.SyntheticEvent) => {
+            event.preventDefault();
+            // Navigate to profile after successfull login
+            history.push(REGISTER_ROUTE);
+        },
+        [history]
+    );
+
     return (
         <div className="login-component">
             <Card>
@@ -56,6 +65,14 @@ export function Login(props: any) {
                             label="Password"
                             variant="outlined"
                         />
+                        <Typography>
+                            Don't have an account ?
+                            <span className="register-link">
+                                <Link href="#" onClick={register}>
+                                    Register now !
+                                </Link>
+                            </span>
+                        </Typography>
                     </form>
                 </CardContent>
                 <CardActions>
@@ -65,7 +82,7 @@ export function Login(props: any) {
                         variant="contained"
                         color="primary"
                     >
-                        Sign-in
+                        Login
                     </Button>
                 </CardActions>
             </Card>

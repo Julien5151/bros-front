@@ -1,13 +1,16 @@
-import { Button, Card, CardActions, CardContent, Snackbar, TextField } from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, Link, Snackbar, TextField, Typography } from "@material-ui/core";
 import "./Register.scss";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
 import { ApiService } from "../../services/api.service";
 import { DataFormatting } from "../../services/data-formatting.service";
+import { useHistory } from "react-router";
+import logo from "../../assets/images/logo.svg";
 
 export function Register(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
     const [open, setOpen] = useState(false);
+    const history = useHistory();
 
     const handleClose = useCallback((event?: React.SyntheticEvent, reason?: string) => {
         if (reason === "clickaway") {
@@ -23,6 +26,15 @@ export function Register(props: any) {
             updateStateFunction({ error: false, errorText: null, value: event.target.value });
         }
     }, []);
+
+    const login = useCallback(
+        (event: React.SyntheticEvent) => {
+            event.preventDefault();
+            // Navigate to profile after successfull login
+            history.push("");
+        },
+        [history]
+    );
 
     const register = useCallback(async () => {
         try {
@@ -67,6 +79,9 @@ export function Register(props: any) {
         <div className="register-component">
             <Card>
                 <CardContent>
+                    <div className="logo-wrapper">
+                        <img src={logo} alt="bros and beers logo"></img>
+                    </div>
                     <form autoComplete="off">
                         <TextField
                             onChange={(event: BaseSyntheticEvent) => handleFieldChange(event, setEmailControl)}
@@ -75,11 +90,19 @@ export function Register(props: any) {
                             label="Email"
                             variant="outlined"
                         />
+                        <Typography>
+                            Already have an account ?
+                            <span className="register-link">
+                                <Link href="#" onClick={login}>
+                                    Login now !
+                                </Link>
+                            </span>
+                        </Typography>
                     </form>
                 </CardContent>
                 <CardActions>
                     <Button onClick={register} disabled={emailControl.error} variant="contained" color="primary">
-                        Sign-up
+                        Register
                     </Button>
                 </CardActions>
             </Card>
