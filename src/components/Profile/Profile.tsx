@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { Button, Card, CardContent } from "@material-ui/core";
+import { useCallback, useEffect, useState } from "react";
 import { User, UserService } from "../../services/user.service";
 import "./Profile.scss";
 
@@ -16,11 +16,18 @@ export function Profile(props: any) {
         }
     });
 
+    const askNotificationPermissions = useCallback(async () => {
+        await Notification.requestPermission();
+    }, []);
+
     return (
         <div className="profile-component">
             <Card>
                 <CardContent>
                     <p>This is a profile</p>
+                    <Button onClick={askNotificationPermissions} variant="contained" color="primary">
+                        Permissions
+                    </Button>
                 </CardContent>
             </Card>
         </div>
