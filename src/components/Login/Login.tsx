@@ -23,12 +23,12 @@ export function Login(props: any) {
 
     const signIn = useCallback(async () => {
         try {
-            const token = await ApiService.post("/auth/signin", {
+            const body = await ApiService.post("/auth/signin", {
                 email: emailControl.value,
                 password: passwordControl.value,
             });
             // Save token in local storage
-            LocalStorageService.saveState({ token });
+            LocalStorageService.saveState({ token: body.token });
             // Navigate to profile after successfull login
             history.push(PROFILE_ROUTE);
         } catch (error) {

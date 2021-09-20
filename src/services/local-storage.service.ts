@@ -19,12 +19,12 @@ export class LocalStorageService {
     static getState(): State | null {
         // Try to get and parse state
         try {
-            const store = this.localStorage.getItem("store");
-            if (!store) {
+            const state = this.localStorage.getItem("store");
+            if (!state) {
                 console.error("No state found in local storage");
                 return null;
             } else {
-                return JSON.parse(store);
+                return JSON.parse(state);
             }
         } catch (error) {
             console.error("Parsing of state failed");
