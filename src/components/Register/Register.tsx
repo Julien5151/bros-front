@@ -3,9 +3,9 @@ import "./Register.scss";
 import { BaseSyntheticEvent, useState } from "react";
 import { useCallback } from "react";
 import { ApiService } from "../../services/api.service";
-import { DataFormatting } from "../../services/data-formatting.service";
 import { useHistory } from "react-router";
 import logo from "../../assets/images/logo.svg";
+import { DataFormattingService } from "../../services/data-formatting.service";
 
 export function Register(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
@@ -45,10 +45,10 @@ export function Register(props: any) {
             // Open authenticator for credential creation
             const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
                 ...credentialCreationOptions,
-                challenge: DataFormatting.stringToUInt8ArrayBuffer(credentialCreationOptions.challenge),
+                challenge: DataFormattingService.stringToUInt8ArrayBuffer(credentialCreationOptions.challenge),
                 user: {
                     ...credentialCreationOptions.user,
-                    id: DataFormatting.stringToUInt8ArrayBuffer(credentialCreationOptions.user.id),
+                    id: DataFormattingService.stringToUInt8ArrayBuffer(credentialCreationOptions.user.id),
                 },
             };
             const credentials = (await navigator.credentials.create({
@@ -58,16 +58,17 @@ export function Register(props: any) {
             const signupRequestBody: any = {
                 publicKeyCredential: {
                     id: credentials.id,
-                    rawId: DataFormatting.arrayBufferToBase64(credentials.rawId),
+                    rawId: DataFormattingService.arrayBufferToBase64(credentials.rawId),
                     response: {
-                        attestationObject: DataFormatting.arrayBufferToBase64(
+                        attestationObject: DataFormattingService.arrayBufferToBase64(
                             (credentials.response as any).attestationObject
                         ),
-                        clientDataJSON: DataFormatting.arrayBufferToBase64(credentials.response.clientDataJSON),
+                        clientDataJSON: DataFormattingService.arrayBufferToBase64(credentials.response.clientDataJSON),
                     },
                 },
             };
             const signupResponse = await ApiService.post("/auth/signup", signupRequestBody);
+            console.log(signupResponse);
             // Open confirmation snackbar
             setOpen(true);
         } catch (error) {

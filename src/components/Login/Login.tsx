@@ -6,6 +6,7 @@ import { useCallback } from "react";
 import { ApiService } from "../../services/api.service";
 import { useHistory } from "react-router-dom";
 import { PROFILE_ROUTE, REGISTER_ROUTE } from "../../App";
+import { LocalStorageService } from "../../services/local-storage.service";
 
 export function Login(props: any) {
     const [emailControl, setEmailControl] = useState({ error: false, errorText: null, value: null });
@@ -22,10 +23,12 @@ export function Login(props: any) {
 
     const signIn = useCallback(async () => {
         try {
-            await ApiService.post("/auth/signin", {
+            const token = await ApiService.post("/auth/signin", {
                 email: emailControl.value,
                 password: passwordControl.value,
             });
+            // Save token in local storage
+            LocalStorageService.saveState({ token });
             // Navigate to profile after successfull login
             history.push(PROFILE_ROUTE);
         } catch (error) {

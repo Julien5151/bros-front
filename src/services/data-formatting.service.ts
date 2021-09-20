@@ -1,4 +1,4 @@
-export class DataFormatting {
+export class DataFormattingService {
     /**
      * Converts an ArrayBuffer to a base64 encoded string
      */
