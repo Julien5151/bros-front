@@ -1,6 +1,7 @@
 import { Button, Card, CardContent } from "@material-ui/core";
 import { useCallback, useEffect, useState } from "react";
 import { User, UserService } from "../../services/user.service";
+import { ApiService } from "../../services/api.service";
 import "./Profile.scss";
 
 export function Profile(props: any) {
@@ -13,15 +14,31 @@ export function Profile(props: any) {
                 setUser(user);
             };
             fetchProfile();
-            // Display profile fetched notification
-            new Notification("Profile fetched successfully", {
-                icon: `${process.env.PUBLIC_URL}/assets/images/logo.png`,
-            });
         }
     });
 
     const askNotificationPermissions = useCallback(async () => {
-        await Notification.requestPermission();
+        const result = await Notification.requestPermission();
+        if (result === "granted") {
+            // Setup SW push notification subscription
+            const swReg = await navigator.serviceWorker.ready;
+            const pushSub = await swReg.pushManager.getSubscription();
+            if (!pushSub) {
+                // Create new subscription
+                const vapidPublicKey =
+                    "BPUUeqOwwaXk7DEMrQyE4de6BORpvyYus0RS0hs5iwJHEcRcelf0CxM6xKMt3IBSakymvGJ3sSEEZXLvpZnmye4";
+                //const convertedKey = DataFormattingService.stringToUInt8ArrayBuffer(vapidPublicKey);
+                const newSub = await swReg.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: vapidPublicKey,
+                });
+                // Send new sub to backend
+                const response = await ApiService.post("/subscriptions", newSub);
+                console.log(response);
+            } else {
+                // We already have a subscription
+            }
+        }
     }, []);
 
     return (
