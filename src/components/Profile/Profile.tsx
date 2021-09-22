@@ -13,6 +13,10 @@ export function Profile(props: any) {
                 setUser(user);
             };
             fetchProfile();
+            // Display profile fetched notification
+            new Notification("Profile fetched successfully", {
+                icon: `${process.env.PUBLIC_URL}/assets/images/logo.png`,
+            });
         }
     });
 
