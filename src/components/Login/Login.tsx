@@ -23,10 +23,14 @@ export function Login(props: any) {
 
     const signIn = useCallback(async () => {
         try {
-            const body = await ApiService.post("/auth/signin", {
-                email: emailControl.value,
-                password: passwordControl.value,
-            });
+            const body = await ApiService.post(
+                "/auth/signin",
+                {
+                    email: emailControl.value,
+                    password: passwordControl.value,
+                },
+                false
+            );
             // Save token in local storage
             LocalStorageService.saveState({ token: body.token });
             // Navigate to profile after successfull login

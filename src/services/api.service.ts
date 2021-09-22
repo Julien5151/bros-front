@@ -3,8 +3,7 @@ import { LocalStorageService } from "./local-storage.service";
 
 export class ApiService {
     // Set base URL depending on environment
-    //static BASE_URL = process.env.NODE_ENV === DEVELOPMENT ? DEVELOPMENT_BASE_URL : PRODUCTION_BASE_URL;
-    static BASE_URL = DEVELOPMENT_BASE_URL;
+    static BASE_URL = process.env.NODE_ENV === DEVELOPMENT ? DEVELOPMENT_BASE_URL : PRODUCTION_BASE_URL;
 
     static async post(endpoint: string, body: any, authentication: boolean = true): Promise<any> {
         const requestInit: RequestInit = {
